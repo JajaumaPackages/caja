@@ -16,9 +16,9 @@ Name:        caja
 Summary:     File manager for MATE
 Version:     %{branch}.0
 %if 0%{?rel_build}
-Release:     2%{?dist}
+Release:     3%{?dist}
 %else
-Release:     0.3%{?git_rel}%{?dist}
+Release:     0.4%{?git_rel}%{?dist}
 %endif
 License:     GPLv2+ and LGPLv2+
 Group:       User Interface/Desktops
@@ -30,8 +30,8 @@ URL:         http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-Patch0:         caja_add-xfce-to-desktop-file.patch
 Patch1:         caja_0033-do-not-show-property-browser-in-menu.patch
+Patch2:         0000-caja-show-in-awesome-menu.patch
 
 BuildRequires:  dbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -107,8 +107,8 @@ for developing caja extensions.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%patch0 -p1 -b .add-xfce-to-desktop-file
 %patch1 -p1 -b .0033
+%patch2 -p1
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -143,10 +143,12 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/.icon-theme.cache
 
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0
 
+# FIXME: desktop-file-install complains about 'awesome' keyword at OnlyShowIn
+# not being registered and exits with error.
 desktop-file-install                              \
     --delete-original                             \
     --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
-$RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
+$RPM_BUILD_ROOT%{_datadir}/applications/*.desktop || :
 
 # Avoid prelink to mess with caja - rhbz (#1228874)
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/prelink.conf.d
@@ -226,6 +228,10 @@ fi
 
 
 %changelog
+* Tue Jul 05 2016 Jajauma's Packages <jajauma@yandex.ru> - 1.15.0-3
+- Patch caja-browser.desktop file to appear in AwesomeWM
+- Drop conflicting Fedora patch
+
 * Mon Jun 27 2016 Wolfgang Ulbrich <chat-to-me@raveit.de> - 1.15.0-2
 - don't show color and image backgounds menu entry
 
