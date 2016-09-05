@@ -14,9 +14,9 @@
 
 Name:        caja
 Summary:     File manager for MATE
-Version:     %{branch}.0
+Version:     %{branch}.4
 %if 0%{?rel_build}
-Release:     3%{?dist}
+Release:     1%{?dist}
 %else
 Release:     0.4%{?git_rel}%{?dist}
 %endif
@@ -228,6 +228,9 @@ fi
 
 
 %changelog
+* Mon Sep 05 2016 Jajauma's Packages <jajauma@yandex.ru> - 1.15.4-1
+- Update to latest upstream release
+
 * Tue Jul 05 2016 Jajauma's Packages <jajauma@yandex.ru> - 1.15.0-3
 - Patch caja-browser.desktop file to appear in AwesomeWM
 - Drop conflicting Fedora patch
