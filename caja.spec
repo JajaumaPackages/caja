@@ -2,7 +2,7 @@
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.15
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -14,7 +14,7 @@
 
 Name:        caja
 Summary:     File manager for MATE
-Version:     %{branch}.4
+Version:     %{branch}.0
 %if 0%{?rel_build}
 Release:     1%{?dist}
 %else
@@ -228,6 +228,9 @@ fi
 
 
 %changelog
+* Tue Sep 27 2016 Jajauma's Packages <jajauma@yandex.ru> - 1.16.0-1
+- Update to latest upstream release
+
 * Mon Sep 05 2016 Jajauma's Packages <jajauma@yandex.ru> - 1.15.4-1
 - Update to latest upstream release
 
